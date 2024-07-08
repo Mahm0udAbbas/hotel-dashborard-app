@@ -92,7 +92,6 @@ function Toggle({ id }) {
       x: window.innerWidth - rect.width - rect.x,
       y: rect.y + rect.height + 8,
     });
-
     openId === "" || openId !== id ? open(id) : close();
   }
 
@@ -106,7 +105,7 @@ function Toggle({ id }) {
 function List({ id, children }) {
   const { openId, position, close } = useContext(MenusContext);
   const ref = useOutsideClick(close);
-
+  console.log(openId);
   if (openId !== id) return null;
 
   return createPortal(
