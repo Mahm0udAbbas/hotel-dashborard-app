@@ -8,8 +8,8 @@ export default function useCheckin() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { mutate: checkin, isLoading: isCheckingin } = useMutation({
-    mutationFn: ({ bookingId, breakfast }) =>
-      updateBooking(bookingId, {
+    mutationFn: ({ bookinId, breakfast }) =>
+      updateBooking(bookinId, {
         status: "checked-in",
         isPaid: true,
         ...breakfast,
