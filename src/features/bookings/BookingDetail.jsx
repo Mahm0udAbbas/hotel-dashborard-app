@@ -11,6 +11,8 @@ import ButtonText from "../../ui/ButtonText";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import { useBooking } from "./useBooking";
 import Spinner from "../../ui/Spinner";
+import { useNavigate } from "react-router-dom";
+import { HiArrowDownOnSquare } from "react-icons/hi2";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -20,9 +22,9 @@ const HeadingGroup = styled.div`
 
 function BookingDetail() {
   const { booking, isLoading } = useBooking();
-  const { status, id: bookingId } = booking;
 
   const moveBack = useMoveBack();
+  const navigate = useNavigate();
 
   const statusToTagName = {
     unconfirmed: "blue",
@@ -31,6 +33,7 @@ function BookingDetail() {
   };
 
   if (isLoading) return <Spinner />;
+  const { status, id: bookingId } = booking;
   return (
     <>
       <Row type="horizontal">
@@ -44,6 +47,12 @@ function BookingDetail() {
       <BookingDataBox booking={booking} />
 
       <ButtonGroup>
+        <Button
+          icon={<HiArrowDownOnSquare />}
+          onClick={() => navigate(`/checkin/${bookingId}`)}
+        >
+          Check in
+        </Button>
         <Button variation="secondary" onClick={moveBack}>
           Back
         </Button>
