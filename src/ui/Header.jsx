@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-import { useLogout } from "../features/authentication/useLogout";
 import Logout from "./logout";
 const StyledHeader = styled.header`
   background-color: var(--color-grey-0);
@@ -9,7 +8,6 @@ const StyledHeader = styled.header`
 `;
 
 export default function Header() {
-  const { logout, isLoading } = useLogout();
   return (
     <StyledHeader>
       <Logout />
