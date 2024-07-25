@@ -1,5 +1,16 @@
 import styled from "styled-components";
 
+import Heading from "../../ui/Heading";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+import { useDarkMode } from "../../context/DarkModeContext";
+
 const ChartBox = styled.div`
   /* Box */
   background-color: var(--color-grey-0);
@@ -105,13 +116,13 @@ const startDataDark = [
 ];
 
 function prepareData(startData, stays) {
-  // A bit ugly code, but sometimes this is what it takes when working with real data 😅
-
   function incArrayValue(arr, field) {
+    console.log(arr);
     return arr.map((obj) =>
       obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
     );
   }
+  console.log(stays);
 
   const data = stays
     .reduce((arr, cur) => {
@@ -129,4 +140,48 @@ function prepareData(startData, stays) {
     .filter((obj) => obj.value > 0);
 
   return data;
+}
+
+export default function DurationChart({ confirmedStays }) {
+  const { isDarkMode } = useDarkMode();
+  const startData = isDarkMode ? startDataDark : startDataDark;
+
+  const data = prepareData(startData, confirmedStays);
+  return (
+    <ChartBox>
+      <Heading as={"h2"}>summary for stay duration</Heading>
+      <ResponsiveContainer width="100%" height="100%">
+        <PieChart width={400} height={400}>
+          <Pie
+            data={data}
+            nameKey="duration"
+            cx="40%"
+            cy="50%"
+            labelLine={false}
+            outerRadius={110}
+            innerRadius={85}
+            paddingAngle={3}
+            fill="#8884d8"
+            dataKey="value"
+          >
+            {data.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={entry.color}
+                stroke={entry.color}
+              />
+            ))}
+          </Pie>
+          <Tooltip />
+          <Legend
+            align="right"
+            verticalAlign="middle"
+            layout="vertical"
+            iconSize={12}
+            iconType="circle"
+          />
+        </PieChart>
+      </ResponsiveContainer>
+    </ChartBox>
+  );
 }
