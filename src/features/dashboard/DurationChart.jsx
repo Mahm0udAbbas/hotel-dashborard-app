@@ -117,12 +117,10 @@ const startDataDark = [
 
 function prepareData(startData, stays) {
   function incArrayValue(arr, field) {
-    console.log(arr);
     return arr.map((obj) =>
       obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
     );
   }
-  console.log(stays);
 
   const data = stays
     .reduce((arr, cur) => {
